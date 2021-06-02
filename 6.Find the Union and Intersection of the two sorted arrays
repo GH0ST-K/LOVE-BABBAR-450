@@ -1,0 +1,20 @@
+class Solution{
+    public static int doUnion(int a[], int n, int b[], int m) 
+    {
+        ArrayList<Integer> A = new ArrayList<Integer>();
+        convertToList(A,a);
+        ArrayList<Integer> B = new ArrayList<Integer>();
+        convertToList(B,b);
+        ArrayList<Integer> union = new ArrayList<Integer>(A);
+        union.addAll(B);
+        Set<Integer> set = new LinkedHashSet<>();
+        set.addAll(union);
+        union.clear();
+        union.addAll(set);
+        return union.size();
+    }
+    public static void convertToList(ArrayList<Integer> A,int[] a){
+        for(int i=0;i<a.length;i++)
+            A.add(a[i]);
+    }
+}
