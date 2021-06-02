@@ -1,0 +1,13 @@
+class Compute {
+    
+    public void rotate(long arr[], long n)
+    {
+        long[] arr2 = new long[arr.length];
+        System.arraycopy(arr,0,arr2,0,arr2.length);
+        Arrays.fill(arr,0);
+        arr[0] = arr2[arr.length-1];
+        for(int i = 1; i< arr.length ; i++){
+            arr[i] = arr2[i-1];
+        }
+    }
+}
