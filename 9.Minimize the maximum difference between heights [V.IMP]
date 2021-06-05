@@ -1,0 +1,71 @@
+package infytq;
+import java.util.*;
+
+public class infytq {
+	
+	static public class Pair{
+		private int value;
+		private int index;
+		Pair(int value,int index){
+			this.value = value;
+			this.index = index;
+		}
+		public int getIndex() {
+			return this.index;
+		}
+		public int getValue() {
+			return this.value;
+		}
+	}	 
+	static int getMinDiff(int[] arr, int n, int k) {
+        ArrayList<Pair> hash = new ArrayList<Pair>();
+        int[] visited = new int[arr.length];
+        for(int i = 0; i <  arr.length ; i++){
+            if(arr[i]-k>=0) 
+            	hash.add(new Pair(arr[i]-k,i));
+            hash.add(new Pair(arr[i]+k,i));
+            visited[i] = 0;
+        }
+        Collections.sort(hash,new Comparator<Pair>() {
+        	public int compare(Pair p1,Pair p2) {
+        		return p1.getValue() - p2.getValue();
+        	}
+        });
+        int ele = 0;
+        int right = 0;
+        int left = 0;
+        while(ele < n && right < hash.size()) {
+        	if(visited[hash.get(right).getIndex()]==0)
+        		ele++;
+        	visited[hash.get(right).getIndex()]++;
+        	right++;
+        }
+        int ans = hash.get(right-1).getValue() - hash.get(left).getValue();
+        while(right < hash.size()) {
+        	if(visited[hash.get(left).getIndex()]==1) {
+        		ele--;
+        	}
+        	visited[hash.get(left).getIndex()]--;
+        	left++;
+        	
+        	while(ele < n && right < hash.size()) {
+            	if(visited[hash.get(right).getIndex()]==0)
+            		ele++;
+            	visited[hash.get(right).getIndex()]++;
+            	right++;
+            }
+        	if(ele == n) {
+        		ans = Math.min(ans, hash.get(right).getValue() - hash.get(left).getValue());
+        	}
+        	else {
+        		break;
+        	}
+        }
+        return ans;
+	}
+
+    public static void main(String args[]) {
+    	int[] arr = {1, 10, 14, 14, 14, 15};
+    	System.out.println(getMinDiff(arr,6,6));
+    }
+}
